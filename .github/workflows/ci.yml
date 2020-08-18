@@ -12,8 +12,8 @@ jobs:
         name: [
           macOS,
           Linux,
-          Windows x64
-          # Windows x32
+          Windows x64,
+          Windows x32
         ]
         include:
 
@@ -45,6 +45,14 @@ jobs:
             cxx: cl
             cmake-generator: '-G "Visual Studio 16 2019" -A x64'
             cmake-args: '-DCMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static-md'
+
+          - name: Windows x86
+            os: windows-latest
+            packages: snappy:x86-windows-static-md zlib:x86-windows-static-md zstd:x86-windows-static-md
+            cc: cl
+            cxx: cl
+            cmake-generator: '-G "Visual Studio 16 2019" -A Win32'
+            cmake-args: '-DCMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-windows-static-md'
 
     steps:
 
@@ -98,8 +106,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: leveldb
-          path: |
-            ${{ matrix.build-out || 'build' }}/libleveldb.so
-            ${{ matrix.build-out || 'build' }}/libleveldb.dylib
-            ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll
+          path: ${{ matrix.build-out || 'build' }}
+          # path: |
+          #   ${{ matrix.build-out || 'build' }}/libleveldb.so
+          #   ${{ matrix.build-out || 'build' }}/libleveldb.dylib
+          #   ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll
           if-no-files-found: error
