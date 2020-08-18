@@ -62,6 +62,8 @@ jobs:
           CFLAGS: ${{ matrix.compiler-cflags }}
           LDFLAGS: ${{ matrix.compiler-ldflags }}
         run: |
+          mkdir -p build
+
           cmake \
             ${{ matrix.cmake-generator }} \
             ${{ matrix.cmake-args }} \
@@ -70,8 +72,9 @@ jobs:
             -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || 'ON' }} \
             -DLEVELDB_BUILD_TESTS=OFF \
             -DLEVELDB_BUILD_BENCHMARKS=OFF \
-            leveldb
+            -S leveldb
+            -B build
 
       - name: Compile source code
         run: |
-          cmake --build . --parallel --config ${{ matrix.cmake-config || 'Release' }}
+          cmake --build build --parallel --config ${{ matrix.cmake-config || 'Release' }}
