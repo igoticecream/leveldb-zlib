@@ -19,7 +19,7 @@ jobs:
 
           - name: macOS
             os: macos-latest
-            packages: snappy zstd crc32c gperftools
+            packages: llvm@10 gcc@10 snappy zstd crc32c gperftools
             cmake-generator: ''
             cmake-args: ''
             cmake-config: 'Release'
