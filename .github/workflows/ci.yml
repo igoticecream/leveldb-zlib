@@ -21,6 +21,7 @@ jobs:
             os: macos-latest
             packages: snappy zstd crc32c gperftools
             cmake-generator: ''
+            cmake-args: ''
             cmake-config: 'Release'
             cmake-shared: 'ON'
             cmake-pic:    'ON'
@@ -54,8 +55,11 @@ jobs:
           CPATH: ${{ matrix.compiler-cpath }}
           LIBRARY_PATH: ${{ matrix.compiler-libpath }}
         run: |
+          echo $LIBRARY_PATH
+
           cmake \
             ${{ matrix.cmake-generator }} \
+            ${{ matrix.cmake-args }} \
             -DCMAKE_BUILD_TYPE=${{ matrix.cmake-config || 'Release' }} \
             -DBUILD_SHARED_LIBS=${{ matrix.cmake-shared || 'ON' }} \
             -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || 'ON' }} \
