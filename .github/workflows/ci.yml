@@ -101,4 +101,5 @@ jobs:
           path: |
             ${{ matrix.build-out || 'build' }}/libleveldb.so
             ${{ matrix.build-out || 'build' }}/libleveldb.dylib
-            ${{ matrix.build-out || 'build' }}/leveldb.dll
+            ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll
+          if-no-files-found: error
