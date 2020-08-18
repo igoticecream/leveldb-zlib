@@ -32,7 +32,7 @@ jobs:
 
           - name: Linux
             os: ubuntu-latest
-            packages: libsnappy-dev zlib1g-dev libzstd-dev libgoogle-perftools-dev
+            packages: gcc-10 libsnappy-dev zlib1g-dev libzstd-dev libgoogle-perftools-dev
 
     steps:
 
@@ -44,6 +44,7 @@ jobs:
       - name: Install packages (Linux)
         if: runner.os == 'Linux' && matrix.packages
         run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
           sudo apt-get update
           sudo apt-get install -y ${{ matrix.packages }}
 
