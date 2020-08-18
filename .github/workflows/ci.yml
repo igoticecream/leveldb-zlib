@@ -22,21 +22,16 @@ jobs:
             packages: gcc@10 snappy zstd crc32c gperftools
             cc: gcc-10
             cxx: g++-10
-            cmake-generator: ''
-            cmake-args: ''
-            cmake-config: 'Release'
-            cmake-shared: 'ON'
-            cmake-pic:    'ON'
             compiler-cflags:  '-I/usr/local/opt/crc32c/include -I/usr/local/opt/gperftools/include'
             compiler-ldflags: '-L/usr/local/opt/crc32c/lib -L/usr/local/opt/gperftools/lib'
-            build-src: 'leveldb'
-            build-out: 'out'
+            build-out: 'build-macOS'
 
           - name: Linux
             os: ubuntu-latest
             packages: gcc-10 g++-10 libsnappy-dev zlib1g-dev libzstd-dev libgoogle-perftools-dev
             cc: gcc-10
             cxx: g++-10
+            build-out: build-linux
 
           - name: Windows x64
             os: windows-latest
@@ -45,6 +40,7 @@ jobs:
             cxx: cl
             cmake-generator: '-G "Visual Studio 16 2019" -A x64'
             cmake-args: '-DCMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static-md'
+            build-out: build-win-x64
 
           - name: Windows x86
             os: windows-latest
@@ -53,6 +49,7 @@ jobs:
             cxx: cl
             cmake-generator: '-G "Visual Studio 16 2019" -A Win32'
             cmake-args: '-DCMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-windows-static-md'
+            build-out: build-win-x86
 
     steps:
 
