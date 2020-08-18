@@ -20,6 +20,7 @@ jobs:
           - name: macOS
             os: macos-latest
             packages: snappy zstd crc32c gperftools
+            cmake-generator: ''
             cmake-config: 'Release'
             cmake-shared: 'ON'
             cmake-pic:    'ON'
@@ -54,9 +55,14 @@ jobs:
           LDFLAGS: ${{ matrix.compiler-ldflags }}
         run: |
           cmake \
+            ${{ matrix.cmake-generator }} \
             -DCMAKE_BUILD_TYPE=${{ matrix.cmake-config || 'Release' }} \
             -DBUILD_SHARED_LIBS=${{ matrix.cmake-shared || 'ON' }} \
             -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || 'ON' }} \
             -DLEVELDB_BUILD_TESTS=OFF \
             -DLEVELDB_BUILD_BENCHMARKS=OFF \
             leveldb
+
+      - name: Compile source code
+        run: |
+          cmake --build . --parallel --config ${{ matrix.cmake-config || 'Release' }}
