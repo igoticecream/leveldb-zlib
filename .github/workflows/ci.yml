@@ -101,3 +101,4 @@ jobs:
           path: |
             ${{ matrix.build-out || 'build' }}/libleveldb.so
             ${{ matrix.build-out || 'build' }}/libleveldb.dylib
+            ${{ matrix.build-out || 'build' }}/leveldb.dll
