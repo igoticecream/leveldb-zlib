@@ -72,6 +72,8 @@ jobs:
             -DLEVELDB_BUILD_BENCHMARKS=OFF \
             leveldb
 
-      - name: Compile source code
-        run: |
           cmake --build . --parallel --config ${{ matrix.cmake-config || 'Release' }}
+
+      # - name: Compile source code
+      #   run: |
+      #     cmake --build . --parallel --config ${{ matrix.cmake-config || 'Release' }}
