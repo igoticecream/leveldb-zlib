@@ -46,7 +46,7 @@ jobs:
       - name: Generate project files
         run: |
           cmake \
-            -DCMAKE_BUILD_TYPE=${{ matrix.cmake-config || Release }} \
+            -DCMAKE_BUILD_TYPE=${{ matrix.cmake-config || 'Release' }} \
             -DBUILD_SHARED_LIBS=${{ matrix.cmake-shared || ON }} \
             -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || ON }} \
             -DLEVELDB_BUILD_TESTS=OFF \
