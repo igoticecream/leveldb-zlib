@@ -56,9 +56,12 @@ jobs:
         env:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
-          CFLAGS: ${{ matrix.compiler-cflags }}
-          LDFLAGS: ${{ matrix.compiler-ldflags }}
+          # CFLAGS: ${{ matrix.compiler-cflags }}
+          # LDFLAGS: ${{ matrix.compiler-ldflags }}
         run: |
+          export CPATH=/usr/local/include:$CPATH
+          export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+
           cmake \
             ${{ matrix.cmake-generator }} \
             ${{ matrix.cmake-args }} \
