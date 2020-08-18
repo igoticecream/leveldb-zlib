@@ -99,8 +99,8 @@ jobs:
         if: runner.os == 'Windows'      
         shell: bash
         run: |
-          [ '${{ matrix.name }}' == 'Windows x64' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x64.dll
-          [ '${{ matrix.name }}' == 'Windows x86' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x86.dll
+          [ '${{ matrix.name }}' == 'Windows x64' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x64.dll || true
+          [ '${{ matrix.name }}' == 'Windows x86' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x86.dll || true
 
       - name: Upload
         uses: actions/upload-artifact@v2
