@@ -62,8 +62,6 @@ jobs:
           CFLAGS: ${{ matrix.compiler-cflags }}
           LDFLAGS: ${{ matrix.compiler-ldflags }}
         run: |
-          mkdir -p build
-
           cmake \
             ${{ matrix.cmake-generator }} \
             ${{ matrix.cmake-args }} \
