@@ -72,6 +72,7 @@ jobs:
           vcpkg integrate install
 
       - name: Generate project files
+        shell: bash
         env:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
@@ -92,3 +93,11 @@ jobs:
       - name: Compile source code
         run: |
           cmake --build ${{ matrix.build-out || 'build' }} --parallel --config ${{ matrix.cmake-config || 'Release' }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: leveldb
+          path: |
+            ${{ matrix.build-out || 'build' }}/libleveldb.so
+            ${{ matrix.build-out || 'build' }}/libleveldb.dylib
