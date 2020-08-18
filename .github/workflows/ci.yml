@@ -22,7 +22,7 @@ jobs:
           - name: Linux
             os: ubuntu-latest
             packages: snappy zstd crc32c gperftools
-            cmake-config: Release
+            cmake-config: 'Release'
             cmake-shared: ON
             cmake-pic: ON
     steps:
