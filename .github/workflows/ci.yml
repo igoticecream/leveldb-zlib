@@ -55,7 +55,7 @@ jobs:
           CPATH: ${{ matrix.compiler-cpath }}
           LIBRARY_PATH: ${{ matrix.compiler-libpath }}
         run: |
-          echo $LIBRARY_PATH
+          ls $LIBRARY_PATH
 
           cmake \
             ${{ matrix.cmake-generator }} \
