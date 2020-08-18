@@ -18,10 +18,10 @@ jobs:
         include:
           - name: macOS
             os: macos-latest
-            packages: libsnappy-dev zlib1g-dev libzstd-dev
+            packages: snappy zstd crc32c gperftools
           - name: Linux
             os: ubuntu-latest
-            packages: snappy zstd crc32c gperftools
+            packages: libsnappy-dev zlib1g-dev libzstd-dev
             cmake-config: 'Release'
             cmake-shared: 'ON'
             cmake-pic: 'ON'
