@@ -23,8 +23,8 @@ jobs:
             os: ubuntu-latest
             packages: snappy zstd crc32c gperftools
             cmake-config: 'Release'
-            cmake-shared: ON
-            cmake-pic: ON
+            cmake-shared: 'ON'
+            cmake-pic: 'ON'
     steps:
 
       - name: Checkout
@@ -47,8 +47,8 @@ jobs:
         run: |
           cmake \
             -DCMAKE_BUILD_TYPE=${{ matrix.cmake-config || 'Release' }} \
-            -DBUILD_SHARED_LIBS=${{ matrix.cmake-shared || ON }} \
-            -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || ON }} \
+            -DBUILD_SHARED_LIBS=${{ matrix.cmake-shared || 'ON' }} \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || 'ON' }} \
             -DLEVELDB_BUILD_TESTS=OFF \
             -DLEVELDB_BUILD_BENCHMARKS=OFF \
             leveldb
