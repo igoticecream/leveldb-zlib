@@ -57,6 +57,8 @@ jobs:
         run: |
           ls $LIBRARY_PATH
           export PATH="$(brew --prefix llvm)/bin:$PATH"
+          export PATH="$(brew --prefix llvm)/bin:$PATH"
+          echo $PATH
 
           cmake \
             ${{ matrix.cmake-generator }} \
