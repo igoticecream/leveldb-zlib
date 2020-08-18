@@ -33,6 +33,8 @@ jobs:
           - name: Linux
             os: ubuntu-latest
             packages: gcc-10 libsnappy-dev zlib1g-dev libzstd-dev libgoogle-perftools-dev
+            cc: gcc-10
+            cxx: g++-10
 
     steps:
 
