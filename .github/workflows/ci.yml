@@ -24,8 +24,8 @@ jobs:
             cmake-config: 'Release'
             cmake-shared: 'ON'
             cmake-pic:    'ON'
-            compiler-cflags:  "-I/usr/local/opt/crc32c/include -I/usr/local/opt/gperftools/include"
-            compiler-ldflags: "-L/usr/local/opt/crc32c/lib -L/usr/local/opt/gperftools/lib"
+            compiler-cpath: "/usr/local/include"
+            compiler-libpath: "/usr/local/lib"
 
           - name: Linux
             os: ubuntu-latest
@@ -51,8 +51,8 @@ jobs:
 
       - name: Generate project files
         env:
-          CFLAGS: ${{ matrix.compiler-cflags }}
-          LDFLAGS: ${{ matrix.compiler-ldflags }}
+          CPATH: ${{ matrix.compiler-cpath }}
+          LIBRARY_PATH: ${{ matrix.compiler-libpath }}
         run: |
           cmake \
             ${{ matrix.cmake-generator }} \
