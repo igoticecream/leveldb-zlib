@@ -19,7 +19,9 @@ jobs:
 
           - name: macOS
             os: macos-latest
-            packages: snappy zstd crc32c gperftools
+            packages: gcc@10 snappy zstd crc32c gperftools
+            cc: gcc-10
+            cxx: g++-10
             cmake-generator: ''
             cmake-args: ''
             cmake-config: 'Release'
@@ -52,6 +54,8 @@ jobs:
 
       - name: Generate project files
         env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
           CFLAGS: ${{ matrix.compiler-cflags }}
           LDFLAGS: ${{ matrix.compiler-ldflags }}
         run: |
