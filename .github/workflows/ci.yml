@@ -72,7 +72,7 @@ jobs:
             -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || 'ON' }} \
             -DLEVELDB_BUILD_TESTS=OFF \
             -DLEVELDB_BUILD_BENCHMARKS=OFF \
-            -S leveldb
+            -S leveldb \
             -B build
 
       - name: Compile source code
