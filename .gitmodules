@@ -1,0 +1,4 @@
+[submodule "leveldb"]
+	path = leveldb
+	url = git@github.com:pmmp/leveldb.git
+	branch = mojang-compatible

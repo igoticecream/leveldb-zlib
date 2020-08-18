@@ -1,0 +1,54 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        name: [
+          macOS,
+          Linux
+          # Windows x64,
+          # Windows x32
+        ]
+        include:
+          - name: macOS
+            os: macos-latest
+            packages: libsnappy-dev zlib1g-dev libzstd-dev
+          - name: Linux
+            os: ubuntu-latest
+            packages: snappy zstd crc32c gperftools
+            cmake-config: Release
+            cmake-shared: ON
+            cmake-pic: ON
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install packages (Linux)
+        if: runner.os == 'Linux' && matrix.packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ${{ matrix.packages }}
+
+      - name: Install packages (macOS)
+        if: runner.os == 'macOS' && matrix.packages
+        run: |
+          brew install ${{ matrix.packages }}
+
+      - name: Generate project files
+        run: |
+          cmake \
+            -DCMAKE_BUILD_TYPE=${{ matrix.cmake-config || Release }} \
+            -DBUILD_SHARED_LIBS=${{ matrix.cmake-shared || ON }} \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || ON }} \
+            -DLEVELDB_BUILD_TESTS=OFF \
+            -DLEVELDB_BUILD_BENCHMARKS=OFF \
+            leveldb
