@@ -27,9 +27,10 @@ jobs:
             cmake-config: 'Release'
             cmake-shared: 'ON'
             cmake-pic:    'ON'
-            compiler-cflags:  "-I/usr/local/opt/crc32c/include -I/usr/local/opt/gperftools/include"
-            compiler-ldflags: "-L/usr/local/opt/crc32c/lib -L/usr/local/opt/gperftools/lib"
-
+            compiler-cflags:  '-I/usr/local/opt/crc32c/include -I/usr/local/opt/gperftools/include'
+            compiler-ldflags: '-L/usr/local/opt/crc32c/lib -L/usr/local/opt/gperftools/lib'
+            build-src: 'leveldb'
+            build-out: 'out'
           - name: Linux
             os: ubuntu-latest
             packages: gcc-10 g++-10 libsnappy-dev zlib1g-dev libzstd-dev libgoogle-perftools-dev
@@ -70,9 +71,9 @@ jobs:
             -DCMAKE_POSITION_INDEPENDENT_CODE=${{ matrix.cmake-pic || 'ON' }} \
             -DLEVELDB_BUILD_TESTS=OFF \
             -DLEVELDB_BUILD_BENCHMARKS=OFF \
-            -S leveldb \
-            -B build
+            -S ${{ matrix.build-src || 'leveldb' }} \
+            -B ${{ matrix.build-out || 'build' }}
 
       - name: Compile source code
         run: |
-          cmake --build build --parallel --config ${{ matrix.cmake-config || 'Release' }}
+          cmake --build ${{ matrix.build-out || 'build' }} --parallel --config ${{ matrix.cmake-config || 'Release' }}
