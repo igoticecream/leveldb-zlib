@@ -16,15 +16,20 @@ jobs:
           # Windows x32
         ]
         include:
+
           - name: macOS
             os: macos-latest
             packages: snappy zstd crc32c gperftools
+            cmake-config: 'Release'
+            cmake-shared: 'ON'
+            cmake-pic:    'ON'
+            compiler-cflags:  "-I/usr/local/opt/crc32c/include -I/usr/local/opt/gperftools/include"
+            compiler-ldflags: "-L/usr/local/opt/crc32c/lib -L/usr/local/opt/gperftools/lib"
+
           - name: Linux
             os: ubuntu-latest
             packages: libsnappy-dev zlib1g-dev libzstd-dev
-            cmake-config: 'Release'
-            cmake-shared: 'ON'
-            cmake-pic: 'ON'
+
     steps:
 
       - name: Checkout
@@ -44,6 +49,9 @@ jobs:
           brew install ${{ matrix.packages }}
 
       - name: Generate project files
+        env:
+          CFLAGS: ${{ matrix.compiler-cflags }}
+          LDFLAGS: ${{ matrix.compiler-ldflags }}
         run: |
           cmake \
             -DCMAKE_BUILD_TYPE=${{ matrix.cmake-config || 'Release' }} \
