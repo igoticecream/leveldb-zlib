@@ -29,7 +29,7 @@ jobs:
 
           - name: Linux
             os: ubuntu-latest
-            packages: libsnappy-dev zlib1g-dev libzstd-dev
+            packages: libsnappy-dev zlib1g-dev libzstd-dev libgoogle-perftools-dev
 
     steps:
 
