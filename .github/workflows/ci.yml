@@ -57,7 +57,7 @@ jobs:
         run: |
           ls $LIBRARY_PATH
           export PATH="$(brew --prefix llvm)/bin:$PATH"
-          export PATH="$(brew --prefix llvm)/bin:$PATH"
+          export PATH="$(brew --prefix gcc)/bin:$PATH"
           echo $PATH
 
           cmake \
