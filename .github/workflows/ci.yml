@@ -19,14 +19,14 @@ jobs:
 
           - name: macOS
             os: macos-latest
-            packages: llvm@10 gcc@10 snappy zstd crc32c gperftools
+            packages: snappy zstd crc32c gperftools
             cmake-generator: ''
             cmake-args: ''
             cmake-config: 'Release'
             cmake-shared: 'ON'
             cmake-pic:    'ON'
-            compiler-cpath: "/usr/local/include"
-            compiler-libpath: "/usr/local/lib"
+            compiler-cflags:  "-I/usr/local/opt/crc32c/include -I/usr/local/opt/gperftools/include"
+            compiler-ldflags: "-L/usr/local/opt/crc32c/lib -L/usr/local/opt/gperftools/lib"
 
           - name: Linux
             os: ubuntu-latest
@@ -52,14 +52,9 @@ jobs:
 
       - name: Generate project files
         env:
-          CPATH: ${{ matrix.compiler-cpath }}
-          LIBRARY_PATH: ${{ matrix.compiler-libpath }}
+          CFLAGS: ${{ matrix.compiler-cflags }}
+          LDFLAGS: ${{ matrix.compiler-ldflags }}
         run: |
-          ls $LIBRARY_PATH
-          export PATH="$(brew --prefix llvm)/bin:$PATH"
-          export PATH="$(brew --prefix gcc)/bin:$PATH"
-          echo $PATH
-
           cmake \
             ${{ matrix.cmake-generator }} \
             ${{ matrix.cmake-args }} \
