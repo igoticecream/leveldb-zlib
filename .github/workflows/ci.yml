@@ -92,15 +92,12 @@ jobs:
             -B ${{ matrix.build-out || 'build' }}
 
       - name: Compile source code
+        shell: bash
         run: |
           cmake --build ${{ matrix.build-out || 'build' }} --parallel --config ${{ matrix.cmake-config || 'Release' }}
 
-      - name: Rename library
-        if: runner.os == 'Windows'      
-        shell: bash
-        run: |
-          [ '${{ matrix.name }}' == 'Windows x64' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x64.dll || true
-          [ '${{ matrix.name }}' == 'Windows x86' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x86.dll || true
+          [ '${{ matrix.name }}' == 'Windows x64' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/leveldb-x64.dll || true
+          [ '${{ matrix.name }}' == 'Windows x86' ] && mv ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb.dll ${{ matrix.build-out || 'build' }}/leveldb-x86.dll || true
 
       - name: Upload
         uses: actions/upload-artifact@v2
@@ -109,6 +106,6 @@ jobs:
           path: |
             ${{ matrix.build-out || 'build' }}/libleveldb.so
             ${{ matrix.build-out || 'build' }}/libleveldb.dylib
-            ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x64.dll
-            ${{ matrix.build-out || 'build' }}/${{ matrix.cmake-config || 'Release' }}/leveldb-x86.dll
+            ${{ matrix.build-out || 'build' }}/leveldb-x64.dll
+            ${{ matrix.build-out || 'build' }}/leveldb-x86.dll
           if-no-files-found: error
